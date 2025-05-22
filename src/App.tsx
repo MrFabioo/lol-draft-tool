@@ -1,11 +1,10 @@
 import './index.css';
+import { ChampionSelect } from './components/ChampionSelect';
 
 function App() {
   return (
     <>
-      <h1 className='text-3xl font-bold underline text-red-600'>
-        Vite + React
-      </h1>
+      <ChampionSelect />
     </>
   );
 }

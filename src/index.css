@@ -1,1 +1,9 @@
 @import 'tailwindcss';
+
+@theme {
+  --color-dark-gray: #010a13;
+  --color-team-blue: #0a4264;
+  --color-team-red: #be2038;
+  --spacing-h-1/20: 5%;
+  --spacing-h-17/20: 85%;
+}
