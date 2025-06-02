@@ -13,7 +13,7 @@ export const ChampionSelect = () => {
       <main className='flex w-full h-17/20'>
         <PickColumn />
         <aside className='px-[10px] w-4/6'>
-          <div className='flex justify-between'>
+          <div className='h-12 flex justify-between'>
             <FilterButtons />
             <SearchBar />
           </div>

@@ -1,2 +1,3 @@
-Wykonać Proponowana struktura src/ z czat GPT "Przeprowadzka i zmiana kariery"
-Sprobować pobrać dane z pliku JSON (https://ddragon.leagueoflegends.com/cdn/15.10.1/data/en_US/champion.json) pomóc może -> https://www.youtube.com/watch?v=D-U0OkP5kwg
+OK - Wykonać Proponowana struktura src/ z czat GPT "Przeprowadzka i zmiana kariery"
+OK - Sprobować pobrać dane z pliku JSON /src/data/champions.json 
+Ustawić wielkość kontenera z przyciskami ról i dostosować odstępy

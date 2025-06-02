@@ -1,11 +1,41 @@
 export const FilterButtons = () => {
   return (
-    <div className='role-filters'>
-      <button className='role-btn mr-[5px]'>Top</button>
-      <button className='role-btn mr-[5px]'>Jungle</button>
-      <button className='role-btn mr-[5px]'>Mid</button>
-      <button className='role-btn mr-[5px]'>ADC</button>
-      <button className='role-btn'>Support</button>
+    <div className='w-1/3 flex justify-around'>
+      <button className='cursor-pointer h-full'>
+        <img
+          src='./src/assets/Position_Gold-Top.png'
+          alt='Position top'
+          className=' h-full'
+        />
+      </button>
+      <button className='cursor-pointer'>
+        <img
+          src='./src/assets/Position_Gold-Jungle.png'
+          alt='Position top'
+          className=' h-full'
+        />
+      </button>
+      <button className='cursor-pointer'>
+        <img
+          src='./src/assets/Position_Gold-Mid.png'
+          alt='Position top'
+          className=' h-full'
+        />
+      </button>
+      <button className='cursor-pointer'>
+        <img
+          src='./src/assets/Position_Gold-Bot.png'
+          alt='Position top'
+          className=' h-full'
+        />
+      </button>
+      <button className='cursor-pointer'>
+        <img
+          src='./src/assets/Position_Gold-Support.png'
+          alt='Position top'
+          className=' h-full'
+        />
+      </button>
     </div>
   );
 };
