@@ -1,3 +1,5 @@
 OK - Wykonać Proponowana struktura src/ z czat GPT "Przeprowadzka i zmiana kariery"
 OK - Sprobować pobrać dane z pliku JSON /src/data/champions.json 
-Ustawić wielkość kontenera z przyciskami ról i dostosować odstępy
+OK - Ustawić wielkość kontenera z przyciskami ról i dostosować odstępy
+OK - Utworzyć mechanizm wyboru danego bohatera oraz wyświetlanie jego awatara na pasku banów (Użycie useState)
+OK - Stworzenie mechanizmu który zabezpiecza w komponentach BansBar oraz PickColumn w przypadku gdy tabela nie zawiera informacji zwracała wartość domyślną
