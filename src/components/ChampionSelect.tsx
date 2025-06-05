@@ -21,7 +21,8 @@ export const ChampionSelect = () => {
 
   const [selectChampion, setSelectChampion] = useState<Champion | null>(null);
   const [championsList, setChampionsList] = useState<Champion[]>([]);
-  console.log(championsList);
+  const [searchChampion, setSearchChampion] = useState('');
+
   return (
     <div className='flex flex-wrap p-[20px] bg-linear-to-b from-gray-500 to-zinc-700 h-screen'>
       <TimerBar />
@@ -31,15 +32,24 @@ export const ChampionSelect = () => {
         <aside className='px-[10px] w-4/6'>
           <div className='h-12 flex justify-between'>
             <FilterButtons />
-            <SearchBar />
+            <SearchBar
+              searchChampion={searchChampion}
+              setSearchChampion={setSearchChampion}
+            />
           </div>
-          <ChampionGrid setSelectChampion={setSelectChampion} />
+          <ChampionGrid
+            selectChampion={selectChampion}
+            setSelectChampion={setSelectChampion}
+            championsList={championsList}
+            searchChampion={searchChampion}
+          />
         </aside>
         <RedPicks championsList={championsList} />
       </main>
 
       <BansBar
         selectChampion={selectChampion}
+        setSelectChampion={setSelectChampion}
         championsList={championsList}
         setChampionsList={setChampionsList}
       />

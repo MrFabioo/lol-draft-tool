@@ -3,3 +3,5 @@ OK - Sprobować pobrać dane z pliku JSON /src/data/champions.json
 OK - Ustawić wielkość kontenera z przyciskami ról i dostosować odstępy
 OK - Utworzyć mechanizm wyboru danego bohatera oraz wyświetlanie jego awatara na pasku banów (Użycie useState)
 OK - Stworzenie mechanizmu który zabezpiecza w komponentach BansBar oraz PickColumn w przypadku gdy tabela nie zawiera informacji zwracała wartość domyślną
+OK - Dezaktywacja już wybranych bohaterów! wyszażenie/przekreślenie
+Sprawdzić czy da się skądś pozyskać pozycje danego bohatera (TOP,MID,BOT,itd)

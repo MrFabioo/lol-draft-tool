@@ -1,21 +1,19 @@
 export const BansBar = ({
   selectChampion,
+  setSelectChampion,
   championsList,
   setChampionsList,
 }) => {
-  // const handleBan = () => {
-  //   if (selectChampion) {
-  //     setChampionsList([...championsList, selectChampion]);
-  //   }
-  // };
-
   const addChampion = () => {
     if (!selectChampion) return;
+
     setChampionsList((prev) => {
       if (prev.length >= 20) return prev;
       return [...prev, selectChampion];
     });
+    setSelectChampion(null);
   };
+
   return (
     <footer className='bottom-bar flex w-full h-1/10 bg-team-red'>
       <div className='flex w-2/5 bg-team-blue'>
