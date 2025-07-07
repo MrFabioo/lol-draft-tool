@@ -6,6 +6,7 @@ import { RedPicks } from '../features/draft/RedPicks';
 import { FilterButtons } from '../features/draft/FilterButtons';
 import { SearchBar } from '../features/draft/SearchBar';
 import { ChampionGrid } from '../features/draft/ChampionGrid';
+// import roles from '../../data/roles.json';
 
 export const ChampionSelect = () => {
   type Champion = {
@@ -22,6 +23,7 @@ export const ChampionSelect = () => {
   const [selectChampion, setSelectChampion] = useState<Champion | null>(null);
   const [championsList, setChampionsList] = useState<Champion[]>([]);
   const [searchChampion, setSearchChampion] = useState('');
+  const [activeRole, setActiveRole] = useState<string | null>(null);
 
   return (
     <div className='flex flex-wrap p-[20px] bg-linear-to-b from-gray-500 to-zinc-700 h-screen'>
@@ -31,7 +33,10 @@ export const ChampionSelect = () => {
         <BluePicks championsList={championsList} />
         <aside className='px-[10px] w-4/6'>
           <div className='h-12 flex justify-between'>
-            <FilterButtons />
+            <FilterButtons
+              activeRole={activeRole}
+              setActiveRole={setActiveRole}
+            />
             <SearchBar
               searchChampion={searchChampion}
               setSearchChampion={setSearchChampion}
@@ -42,6 +47,8 @@ export const ChampionSelect = () => {
             setSelectChampion={setSelectChampion}
             championsList={championsList}
             searchChampion={searchChampion}
+            activeRole={activeRole}
+            // roles={roles}
           />
         </aside>
         <RedPicks championsList={championsList} />

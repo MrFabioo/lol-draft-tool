@@ -1,18 +1,26 @@
 import champions from '../../data/champions.json';
+import roles from '../../data/roles.json';
 
 export const ChampionGrid = ({
   selectChampion,
   setSelectChampion,
   championsList,
   searchChampion,
+  activeRole,
+  // roles,
 }) => {
-  const filteredChampions = Object.entries(champions.data).filter(
-    ([i, champ]) =>
-      champ.name.toLowerCase().includes(searchChampion.toLowerCase())
+  const allChampions = Object.entries(champions.data);
+
+  const championsByRole = activeRole
+    ? allChampions.filter(([i, champ]) => roles[activeRole].includes(champ.key))
+    : allChampions;
+
+  const filteredChampions = championsByRole.filter(([i, champ]) =>
+    champ.name.toLowerCase().includes(searchChampion.toLowerCase())
   );
 
   return (
-    <section className='flex justify-center flex-wrap w-full h-[calc(100%-48px)] overflow-auto'>
+    <section className='flex justify-center content-start flex-wrap w-full h-[calc(100%-48px)] overflow-auto'>
       {filteredChampions.map(([i, champ]) => {
         const isDisabled =
           (selectChampion && selectChampion.id === champ.id) ||

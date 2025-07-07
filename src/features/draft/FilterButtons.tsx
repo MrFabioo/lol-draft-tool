@@ -1,38 +1,55 @@
-export const FilterButtons = () => {
+export const FilterButtons = ({ activeRole, setActiveRole }) => {
   return (
     <div className='w-1/3 flex justify-around'>
-      <button className='cursor-pointer h-full'>
+      <button
+        className={`cursor-pointer h-full`}
+        onClick={() => setActiveRole(activeRole === 'top' ? null : 'top')}
+      >
         <img
           src='./src/assets/Position_Gold-Top.png'
           alt='Position top'
           className=' h-full'
         />
       </button>
-      <button className='cursor-pointer'>
+      <button
+        className='cursor-pointer'
+        onClick={() => setActiveRole(activeRole === 'jungle' ? null : 'jungle')}
+      >
         <img
           src='./src/assets/Position_Gold-Jungle.png'
-          alt='Position top'
+          alt='Position jungle'
           className=' h-full'
         />
       </button>
-      <button className='cursor-pointer'>
+      <button
+        className='cursor-pointer'
+        onClick={() => setActiveRole(activeRole === 'mid' ? null : 'mid')}
+      >
         <img
           src='./src/assets/Position_Gold-Mid.png'
-          alt='Position top'
+          alt='Position mid'
           className=' h-full'
         />
       </button>
-      <button className='cursor-pointer'>
+      <button
+        className='cursor-pointer'
+        onClick={() => setActiveRole(activeRole === 'bot' ? null : 'bot')}
+      >
         <img
           src='./src/assets/Position_Gold-Bot.png'
-          alt='Position top'
+          alt='Position bot'
           className=' h-full'
         />
       </button>
-      <button className='cursor-pointer'>
+      <button
+        className='cursor-pointer'
+        onClick={() =>
+          setActiveRole(activeRole === 'support' ? null : 'support')
+        }
+      >
         <img
           src='./src/assets/Position_Gold-Support.png'
-          alt='Position top'
+          alt='Position support'
           className=' h-full'
         />
       </button>
