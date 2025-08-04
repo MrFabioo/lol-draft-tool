@@ -1,9 +1,0 @@
-OK - Wykonać Proponowana struktura src/ z czat GPT "Przeprowadzka i zmiana kariery"
-OK - Sprobować pobrać dane z pliku JSON /src/data/champions.json 
-OK - Ustawić wielkość kontenera z przyciskami ról i dostosować odstępy
-OK - Utworzyć mechanizm wyboru danego bohatera oraz wyświetlanie jego awatara na pasku banów (Użycie useState)
-OK - Stworzenie mechanizmu który zabezpiecza w komponentach BansBar oraz PickColumn w przypadku gdy tabela nie zawiera informacji zwracała wartość domyślną
-OK - Dezaktywacja już wybranych bohaterów! wyszażenie/przekreślenie
-OK - Sprawdzić czy da się skądś pozyskać pozycje danego bohatera (TOP,MID,BOT,itd) + zmienienie img w wyborze bohaterów na bgimage w divie + w przypadku filtrowania mamy 2 wiersze to zrobic tak zeby było jedno pod drugim + dodać wyświetlanie podczas kliknięcia (znalazłem plik - https://github.com/shawtan/lolchest/blob/master/champion_roles.json)
-OK - Pierdolnąć filtorwanie po liniach
-Dodać wybrany filtr lini np przez cień z tyłu lub zmianę ikonki na inny kolor

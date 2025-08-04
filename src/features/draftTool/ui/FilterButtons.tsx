@@ -8,7 +8,9 @@ export const FilterButtons = ({ activeRole, setActiveRole }) => {
         <img
           src='./src/assets/Position_Gold-Top.png'
           alt='Position top'
-          className=' h-full'
+          className={`h-full ${
+            activeRole === 'top' ? 'drop-shadow-[0_0_10px_rgba(0,0,0,1)]' : ''
+          }`}
         />
       </button>
       <button
@@ -18,7 +20,11 @@ export const FilterButtons = ({ activeRole, setActiveRole }) => {
         <img
           src='./src/assets/Position_Gold-Jungle.png'
           alt='Position jungle'
-          className=' h-full'
+          className={`h-full ${
+            activeRole === 'jungle'
+              ? 'drop-shadow-[0_0_10px_rgba(0,0,0,1)]'
+              : ''
+          }`}
         />
       </button>
       <button
@@ -28,7 +34,9 @@ export const FilterButtons = ({ activeRole, setActiveRole }) => {
         <img
           src='./src/assets/Position_Gold-Mid.png'
           alt='Position mid'
-          className=' h-full'
+          className={`h-full ${
+            activeRole === 'mid' ? 'drop-shadow-[0_0_10px_rgba(0,0,0,1)]' : ''
+          }`}
         />
       </button>
       <button
@@ -38,7 +46,9 @@ export const FilterButtons = ({ activeRole, setActiveRole }) => {
         <img
           src='./src/assets/Position_Gold-Bot.png'
           alt='Position bot'
-          className=' h-full'
+          className={`h-full ${
+            activeRole === 'bot' ? 'drop-shadow-[0_0_10px_rgba(0,0,0,1)]' : ''
+          }`}
         />
       </button>
       <button
@@ -50,7 +60,11 @@ export const FilterButtons = ({ activeRole, setActiveRole }) => {
         <img
           src='./src/assets/Position_Gold-Support.png'
           alt='Position support'
-          className=' h-full'
+          className={`h-full ${
+            activeRole === 'support'
+              ? 'drop-shadow-[0_0_10px_rgba(0,0,0,1)]'
+              : ''
+          }`}
         />
       </button>
     </div>

@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { TimerBar } from '../features/draft/TimerBar';
-import { BansBar } from '../features/draft/BansBar';
-import { BluePicks } from '../features/draft/BluePicks';
-import { RedPicks } from '../features/draft/RedPicks';
-import { FilterButtons } from '../features/draft/FilterButtons';
-import { SearchBar } from '../features/draft/SearchBar';
-import { ChampionGrid } from '../features/draft/ChampionGrid';
+import { TimerBar } from './ui/TimerBar';
+import { BansBar } from './ui/BansBar';
+import { BluePicks } from './ui/BluePicks';
+import { RedPicks } from './ui/RedPicks';
+import { FilterButtons } from './ui/FilterButtons';
+import { SearchBar } from './ui/SearchBar';
+import { ChampionGrid } from './ui/ChampionGrid';
 // import roles from '../../data/roles.json';
 
 export const ChampionSelect = () => {

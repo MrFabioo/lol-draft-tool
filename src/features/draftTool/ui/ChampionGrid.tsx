@@ -1,5 +1,5 @@
-import champions from '../../data/champions.json';
-import roles from '../../data/roles.json';
+import champions from '../data/champions.json';
+import roles from '../data/roles.json';
 
 export const ChampionGrid = ({
   selectChampion,
