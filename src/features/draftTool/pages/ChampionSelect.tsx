@@ -1,29 +1,23 @@
-import React, { useState } from 'react';
-import { TimerBar } from './ui/TimerBar';
-import { BansBar } from './ui/BansBar';
-import { BluePicks } from './ui/BluePicks';
-import { RedPicks } from './ui/RedPicks';
-import { FilterButtons } from './ui/FilterButtons';
-import { SearchBar } from './ui/SearchBar';
-import { ChampionGrid } from './ui/ChampionGrid';
-// import roles from '../../data/roles.json';
+import { TimerBar } from '../components/TimerBar';
+import { BansBar } from '../components/BansBar';
+import { BluePicks } from '../components/BluePicks';
+import { RedPicks } from '../components/RedPicks';
+import { FilterButtons } from '../components/FilterButtons';
+import { SearchBar } from '../components/SearchBar';
+import { ChampionGrid } from '../components/ChampionGrid';
+import { useChampionSelectLogic } from '../hooks/useChampionSelectLogic';
 
 export const ChampionSelect = () => {
-  type Champion = {
-    id: string;
-    key: string;
-    name: string;
-    image: {
-      full: string;
-      sprite: string;
-      group: string;
-    };
-  };
-
-  const [selectChampion, setSelectChampion] = useState<Champion | null>(null);
-  const [championsList, setChampionsList] = useState<Champion[]>([]);
-  const [searchChampion, setSearchChampion] = useState('');
-  const [activeRole, setActiveRole] = useState<string | null>(null);
+  const {
+    selectChampion,
+    setSelectChampion,
+    championsList,
+    setChampionsList,
+    searchChampion,
+    setSearchChampion,
+    activeRole,
+    setActiveRole,
+  } = useChampionSelectLogic();
 
   return (
     <div className='flex flex-wrap p-[20px] bg-linear-to-b from-gray-500 to-zinc-700 h-screen'>
@@ -48,7 +42,6 @@ export const ChampionSelect = () => {
             championsList={championsList}
             searchChampion={searchChampion}
             activeRole={activeRole}
-            // roles={roles}
           />
         </aside>
         <RedPicks championsList={championsList} />
