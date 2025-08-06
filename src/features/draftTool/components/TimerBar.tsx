@@ -1,11 +1,18 @@
 export const TimerBar = () => {
   return (
-    <header className='header flex justify-between h-1/20 w-full'>
-      <div className='flex justify-end items-center w-1/3 bg-team-blue'>
+    <header className='w-full h-12 flex text-white text-sm font-bold '>
+      {/* Team Blue */}
+      <div className='w-1/3 bg-team-blue flex items-center justify-end px-4'>
         Blue
       </div>
-      <div className='flex justify-center items-center w-1/3'>Blue Ban</div>
-      <div className='flex justify-start items-center w-1/3 bg-team-red'>
+
+      {/* Draft Phase */}
+      <div className='w-1/3 flex items-center justify-center bg-gray-800 text-white'>
+        Blue Ban
+      </div>
+
+      {/* Team Red */}
+      <div className='w-1/3 bg-team-red flex items-center justify-start px-4'>
         Red
       </div>
     </header>
