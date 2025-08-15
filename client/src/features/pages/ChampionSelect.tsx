@@ -8,7 +8,7 @@ import { SearchBar } from '../components/SearchBar';
 import { ChampionGrid } from '../components/ChampionGrid';
 import { useChampionSelectLogic } from '../hooks/useChampionSelectLogic';
 
-export const ChampionSelect = () => {
+export default function ChampionSelect() {
   const {
     selectChampion,
     setSelectChampion,
@@ -19,9 +19,13 @@ export const ChampionSelect = () => {
     activeRole,
     setActiveRole,
     socket,
+    roomId,
   } = useChampionSelectLogic();
 
   useEffect(() => {
+    if (!roomId) return;
+    socket.emit('joinRoom', roomId);
+
     socket.on('updateChampionSelect', (newList) => {
       setChampionsList(newList);
     });
@@ -29,7 +33,7 @@ export const ChampionSelect = () => {
     return () => {
       socket.off('updateChampionSelect');
     };
-  }, []);
+  }, [roomId]);
 
   return (
     <div className='flex flex-wrap p-[20px] bg-linear-to-b from-gray-500 to-zinc-700 h-screen'>
@@ -65,7 +69,8 @@ export const ChampionSelect = () => {
         championsList={championsList}
         setChampionsList={setChampionsList}
         socket={socket}
+        roomId={roomId}
       />
     </div>
   );
-};
+}

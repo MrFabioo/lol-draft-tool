@@ -6,16 +6,20 @@ const io = new Server(server, {
   cors: { origin: '*' },
 });
 
-let championList = [];
+let rooms = {};
 
 io.on('connection', (socket) => {
   console.log('Nowy klient podłączony');
 
-  socket.emit('updateChampionSelect', championList);
+  socket.on('joinRoom', (roomId) => {
+    socket.join(roomId);
+    if (!rooms[roomId]) rooms[roomId] = [];
+    socket.emit('updateChampionSelect', rooms[roomId]);
+  });
 
-  socket.on('updateChampionSelect', (newList) => {
-    championList = newList;
-    socket.broadcast.emit('updateChampionSelect', championList);
+  socket.on('updateChampionSelect', ({ roomId, newList }) => {
+    rooms[roomId] = newList;
+    socket.to(roomId).emit('updateChampionSelect', newList);
   });
 
   socket.on('disconnect', () => {

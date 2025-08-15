@@ -6,17 +6,18 @@ export const BansBar = ({
   championsList,
   setChampionsList,
   socket,
+  roomId,
 }) => {
   const addChampion = () => {
-    if (!selectChampion) return;
-
-    setChampionsList((prev) => {
-      if (prev.length >= 20) return prev;
-      const newList = [...prev, selectChampion];
-      socket.emit('updateChampionSelect', newList);
-      return newList;
-    });
-    setSelectChampion(null);
+    if (selectChampion && roomId) {
+      setChampionsList((prev) => {
+        if (prev.length >= 20) return prev;
+        const newList = [...prev, selectChampion];
+        socket.emit('updateChampionSelect', { roomId, newList });
+        return newList;
+      });
+      setSelectChampion(null);
+    }
   };
 
   const leftSlots = [0, 2, 4, 13, 15];
