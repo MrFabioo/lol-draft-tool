@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { TimerBar } from '../components/TimerBar';
 import { BansBar } from '../components/BansBar';
 import { BluePicks } from '../components/BluePicks';
@@ -17,7 +18,18 @@ export const ChampionSelect = () => {
     setSearchChampion,
     activeRole,
     setActiveRole,
+    socket,
   } = useChampionSelectLogic();
+
+  useEffect(() => {
+    socket.on('updateChampionSelect', (newList) => {
+      setChampionsList(newList);
+    });
+
+    return () => {
+      socket.off('updateChampionSelect');
+    };
+  }, []);
 
   return (
     <div className='flex flex-wrap p-[20px] bg-linear-to-b from-gray-500 to-zinc-700 h-screen'>
@@ -52,6 +64,7 @@ export const ChampionSelect = () => {
         setSelectChampion={setSelectChampion}
         championsList={championsList}
         setChampionsList={setChampionsList}
+        socket={socket}
       />
     </div>
   );

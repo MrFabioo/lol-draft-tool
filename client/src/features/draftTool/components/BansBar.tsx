@@ -5,13 +5,16 @@ export const BansBar = ({
   setSelectChampion,
   championsList,
   setChampionsList,
+  socket,
 }) => {
   const addChampion = () => {
     if (!selectChampion) return;
 
     setChampionsList((prev) => {
       if (prev.length >= 20) return prev;
-      return [...prev, selectChampion];
+      const newList = [...prev, selectChampion];
+      socket.emit('updateChampionSelect', newList);
+      return newList;
     });
     setSelectChampion(null);
   };
