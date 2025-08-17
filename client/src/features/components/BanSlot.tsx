@@ -1,8 +1,6 @@
 import { Champion } from '../types/types';
-type BanSlotProps = {
-  champion: Champion | null;
-};
-export const BanSlot = ({ champion }: BanSlotProps) => {
+
+export const BanSlot = ({ champion }) => {
   if (!champion) {
     return <div className='h-full w-1/5 bg-dark-gray' />;
   }

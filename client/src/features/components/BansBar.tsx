@@ -1,23 +1,32 @@
 import { BanSlot } from './BanSlot';
+import { Champion } from '../types/types'; // add
 
 export const BansBar = ({
   selectChampion,
   setSelectChampion,
-  championsList,
-  setChampionsList,
+  room,
   socket,
   roomId,
+  currentPlayer,
 }) => {
   const addChampion = () => {
-    if (selectChampion && roomId) {
-      setChampionsList((prev) => {
-        if (prev.length >= 20) return prev;
-        const newList = [...prev, selectChampion];
-        socket.emit('updateChampionSelect', { roomId, newList });
-        return newList;
-      });
-      setSelectChampion(null);
-    }
+    if (!selectChampion || !currentPlayer || currentPlayer.role === 'Spectator')
+      return;
+
+    const team = currentPlayer.role === 'Red' ? 'Red' : 'Blue';
+    const newChampion: Champion = {
+      id: selectChampion,
+      key: selectChampion.key,
+      name: selectChampion.name,
+      image: {
+        full: selectChampion.image.full,
+      },
+      action: 'pick',
+      team,
+    };
+
+    socket.emit('updateChampionSelect', { roomId, champion: newChampion });
+    setSelectChampion(null);
   };
 
   const leftSlots = [0, 2, 4, 13, 15];
@@ -35,16 +44,15 @@ export const BansBar = ({
                 : 'ban-slot h-full w-1/5 bg-dark-gray'
             }
           >
-            <BanSlot champion={championsList[index]} />
+            <BanSlot champion={room.championList[index]} />
           </div>
         ))}
       </div>
       <div className='w-1/5 flex justify-center items-center mx-[60px] bg-cyan-100'>
-        <button className='cursor-pointer border-2' onClick={addChampion}>
-          Ban/Pick
-        </button>
+        {currentPlayer.role !== 'Spectator' && room.status === 'drafting' && (
+          <button onClick={addChampion}>Dodaj</button>
+        )}
       </div>
-
       <div className='flex w-2/5 bg-team-blue'>
         {rightSlots.map((index, i) => (
           <div
@@ -55,7 +63,7 @@ export const BansBar = ({
                 : 'ban-slot h-full w-1/5 bg-dark-gray'
             }
           >
-            <BanSlot champion={championsList[index]} />
+            <BanSlot champion={room.championList[index]} />
           </div>
         ))}
       </div>

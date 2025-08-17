@@ -6,7 +6,7 @@ export default function Home() {
 
   const createRoom = () => {
     const roomId = uuidv4();
-    navigate(`/draft/${roomId}`);
+    navigate(`/${roomId}`);
   };
 
   return (
