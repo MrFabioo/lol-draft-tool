@@ -1,7 +1,7 @@
-import type { Champion } from '../types/types';
+import type { RiotChampion } from '../types/types';
 
 type ChampionCardProps = {
-  champion: Champion;
+  champion: RiotChampion;
   isDisabled: boolean;
   onClick: () => void;
 };

@@ -15,7 +15,7 @@ export const BansBar = ({
 
     const team = currentPlayer.role === 'Red' ? 'Red' : 'Blue';
     const newChampion: Champion = {
-      id: selectChampion,
+      id: selectChampion.id,
       key: selectChampion.key,
       name: selectChampion.name,
       image: {
@@ -49,9 +49,11 @@ export const BansBar = ({
         ))}
       </div>
       <div className='w-1/5 flex justify-center items-center mx-[60px] bg-cyan-100'>
-        {currentPlayer.role !== 'Spectator' && room.status === 'drafting' && (
-          <button onClick={addChampion}>Dodaj</button>
-        )}
+        {room.championList.length < 20 &&
+          currentPlayer.role !== 'Spectator' &&
+          room.status === 'drafting' && (
+            <button onClick={addChampion}>Dodaj</button>
+          )}
       </div>
       <div className='flex w-2/5 bg-team-blue'>
         {rightSlots.map((index, i) => (

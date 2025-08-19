@@ -1,4 +1,5 @@
-import champions from '../data/champions.json';
+import championsRaw from '../data/champions.json';
+import type { RiotChampion } from '../types/types';
 import roles from '../data/roles.json';
 import { ChampionCard } from './ChampionCard';
 
@@ -9,7 +10,19 @@ export const ChampionGrid = ({
   searchChampion,
   activeRole,
 }) => {
-  const allChampions = Object.entries(champions.data);
+  const champions: Record<string, RiotChampion> = Object.fromEntries(
+    Object.entries(championsRaw.data).map(([id, champ]) => [
+      id,
+      {
+        id: champ.id,
+        key: champ.key,
+        name: champ.name,
+        image: { full: champ.image.full },
+      },
+    ])
+  );
+
+  const allChampions = Object.entries(champions);
 
   const filteredChampions = allChampions
     .filter(([_, champ]) => {

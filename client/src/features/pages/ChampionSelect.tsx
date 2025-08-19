@@ -39,7 +39,9 @@ export default function ChampionSelect() {
     const handler = (newRoom: RoomState) => setRoom(newRoom);
     socket.on('updateRoom', handler);
 
-    return () => socket.off('updateRoom', handler);
+    return () => {
+      socket.off('updateRoom', handler);
+    };
   }, [roomId, role]);
 
   if (!room) return <div>Loading...</div>;
@@ -50,7 +52,6 @@ export default function ChampionSelect() {
     if (!roomId) return;
     socket.emit('playerReady', { roomId });
   };
-
   return (
     <div className='flex flex-wrap p-[20px] bg-linear-to-b from-gray-500 to-zinc-700 h-screen'>
       <h1>
