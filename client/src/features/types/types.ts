@@ -1,10 +1,12 @@
-export type Champion = {
+export type RiotChampion = {
   id: string;
   key: string;
   name: string;
   image: {
     full: string;
   };
+};
+export type Champion = RiotChampion & {
   action: 'pick' | 'ban';
   team: 'Red' | 'Blue';
 };
