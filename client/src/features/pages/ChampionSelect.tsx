@@ -42,6 +42,9 @@ export default function ChampionSelect() {
     return () => {
       socket.off('updateRoom', handler);
     };
+    return () => {
+      socket.off('updateRoom', handler);
+    };
   }, [roomId, role]);
 
   if (!room) return <div>Loading...</div>;
