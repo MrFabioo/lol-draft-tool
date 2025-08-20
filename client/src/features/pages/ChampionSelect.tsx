@@ -48,33 +48,8 @@ export default function ChampionSelect() {
 
   const currentPlayer = room?.players[socket.id!];
 
-  const handleReady = () => {
-    if (!roomId) return;
-    socket.emit('playerReady', { roomId });
-  };
   return (
     <div className='flex flex-wrap p-[20px] bg-linear-to-b from-gray-500 to-zinc-700 h-screen'>
-      <h1>
-        Pokój: {roomId} - {currentPlayer?.role}
-      </h1>
-      <h2>Status: {room.status}</h2>
-
-      <h3>Gracze:</h3>
-
-      {currentPlayer.role !== 'Spectator' && room.status === 'waiting' && (
-        <button onClick={handleReady}>
-          {currentPlayer.ready ? 'Gotowy!' : 'Kliknij gotowy'}
-        </button>
-      )}
-
-      <ul>
-        {Object.entries(room.players).map(([id, player]) => (
-          <li key={id}>
-            {player.role} {player.ready ? '(gotowy)' : '(nie gotowy)'}
-            {id === socket.id ? ' (Ty)' : ''}
-          </li>
-        ))}
-      </ul>
       <TimerBar />
 
       <main className='flex w-full h-17/20'>

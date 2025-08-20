@@ -9,6 +9,21 @@ export const BansBar = ({
   roomId,
   currentPlayer,
 }) => {
+  const canReady =
+    currentPlayer.role !== 'Spectator' && room.status === 'waiting';
+
+  const canBan =
+    currentPlayer.role !== 'Spectator' &&
+    room.status === 'drafting' &&
+    (room.championList.length <= 5 ||
+      (room.championList.length >= 12 && room.championList.length <= 15));
+
+  const canPick = room.championList.length < 20;
+
+  const handleReady = () => {
+    if (!roomId) return;
+    socket.emit('playerReady', { roomId });
+  };
   const addChampion = () => {
     if (!selectChampion || !currentPlayer || currentPlayer.role === 'Spectator')
       return;
@@ -49,11 +64,15 @@ export const BansBar = ({
         ))}
       </div>
       <div className='w-1/5 flex justify-center items-center mx-[60px] bg-cyan-100'>
-        {room.championList.length < 20 &&
-          currentPlayer.role !== 'Spectator' &&
-          room.status === 'drafting' && (
-            <button onClick={addChampion}>Dodaj</button>
-          )}
+        {canReady ? (
+          <button onClick={handleReady}>
+            {currentPlayer.ready ? 'WAITING...' : 'READY'}
+          </button>
+        ) : canBan ? (
+          <button onClick={addChampion}>BAN</button>
+        ) : canPick ? (
+          <button onClick={addChampion}>LOCK IN</button>
+        ) : null}
       </div>
       <div className='flex w-2/5 bg-team-blue'>
         {rightSlots.map((index, i) => (
