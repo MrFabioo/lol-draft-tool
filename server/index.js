@@ -6,6 +6,29 @@ const io = new Server(server, {
   cors: { origin: '*' },
 });
 
+const draftSequence = [
+  { type: 'ban', team: 'blue' },
+  { type: 'ban', team: 'red' },
+  { type: 'ban', team: 'blue' },
+  { type: 'ban', team: 'red' },
+  { type: 'ban', team: 'blue' },
+  { type: 'ban', team: 'red' },
+  { type: 'pick', team: 'blue' },
+  { type: 'pick', team: 'red' },
+  { type: 'pick', team: 'red' },
+  { type: 'pick', team: 'blue' },
+  { type: 'pick', team: 'blue' },
+  { type: 'pick', team: 'red' },
+  { type: 'ban', team: 'red' },
+  { type: 'ban', team: 'blue' },
+  { type: 'ban', team: 'red' },
+  { type: 'ban', team: 'blue' },
+  { type: 'pick', team: 'red' },
+  { type: 'pick', team: 'blue' },
+  { type: 'pick', team: 'blue' },
+  { type: 'pick', team: 'red' },
+];
+
 let rooms = {};
 
 io.on('connection', (socket) => {
@@ -15,7 +38,12 @@ io.on('connection', (socket) => {
     socket.join(roomId);
 
     if (!rooms[roomId]) {
-      rooms[roomId] = { championList: [], players: {}, status: 'waiting' };
+      rooms[roomId] = {
+        championList: [],
+        players: {},
+        status: 'waiting',
+        currentStep: 0,
+      };
     }
 
     rooms[roomId].players[socket.id] = { role, ready: false };
@@ -41,21 +69,32 @@ io.on('connection', (socket) => {
     io.to(roomId).emit('updateRoom', rooms[roomId]);
   });
 
-  socket.on('updateChampionSelect', ({ roomId, champion }) => {
-    const room = rooms[roomId];
-    if (!rooms || room.status !== 'drafting') return;
+  socket.on(
+    'updateChampionSelect',
+    ({ roomId, champion, actionType, team }) => {
+      const room = rooms[roomId];
+      const step = draftSequence[room.currentStep];
 
-    const player = room.players[socket.id];
-    if (!player) return;
+      if (!rooms || room.status !== 'drafting' || !step) return;
 
-    if (
-      (player.role === 'Red' && champion.team === 'Red') ||
-      (player.role === 'Blue' && champion.team === 'Blue')
-    ) {
-      room.championList.push(champion);
-      io.to(roomId).emit('updateRoom', room);
+      if (step.type !== actionType || step.team !== team) {
+        socket.emit('invalidAction');
+        return;
+      }
+
+      const player = room.players[socket.id];
+      if (!player) return;
+
+      if (
+        (player.role === 'Red' && champion.team === 'Red') ||
+        (player.role === 'Blue' && champion.team === 'Blue')
+      ) {
+        room.championList.push(champion);
+        room.currentStep += 1;
+        io.to(roomId).emit('updateRoom', room);
+      }
     }
-  });
+  );
 
   socket.on('disconnect', () => {
     console.log('Klient rozłączony');

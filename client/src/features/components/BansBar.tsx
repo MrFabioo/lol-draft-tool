@@ -1,5 +1,6 @@
 import { BanSlot } from './BanSlot';
-import { Champion } from '../types/types'; // add
+import { Champion } from '../types/types';
+import { DraftAction } from '../types/types';
 
 export const BansBar = ({
   selectChampion,
@@ -7,27 +8,53 @@ export const BansBar = ({
   room,
   socket,
   roomId,
-  currentPlayer,
+  role,
 }) => {
+  const currentPlayer = room?.players[socket.id!];
+
+  const draftSequence: DraftAction[] = [
+    { type: 'ban', team: 'blue' },
+    { type: 'ban', team: 'red' },
+    { type: 'ban', team: 'blue' },
+    { type: 'ban', team: 'red' },
+    { type: 'ban', team: 'blue' },
+    { type: 'ban', team: 'red' },
+    { type: 'pick', team: 'blue' },
+    { type: 'pick', team: 'red' },
+    { type: 'pick', team: 'red' },
+    { type: 'pick', team: 'blue' },
+    { type: 'pick', team: 'blue' },
+    { type: 'pick', team: 'red' },
+    { type: 'ban', team: 'red' },
+    { type: 'ban', team: 'blue' },
+    { type: 'ban', team: 'red' },
+    { type: 'ban', team: 'blue' },
+    { type: 'pick', team: 'red' },
+    { type: 'pick', team: 'blue' },
+    { type: 'pick', team: 'blue' },
+    { type: 'pick', team: 'red' },
+  ];
+
+  const isMyTurn =
+    role !== 'spectator' && draftSequence[room.currentStep]?.team === role;
+
+  const handleAction = () => {
+    if (!isMyTurn) return;
+    const actionType = draftSequence[room.currentStep].type;
+    socket.emit('makeAction', { actionType, team: role });
+  };
+
   const canReady =
     currentPlayer.role !== 'Spectator' && room.status === 'waiting';
-
-  const canBan =
-    currentPlayer.role !== 'Spectator' &&
-    room.status === 'drafting' &&
-    (room.championList.length <= 5 ||
-      (room.championList.length >= 12 && room.championList.length <= 15));
-
-  const canPick = room.championList.length < 20;
 
   const handleReady = () => {
     if (!roomId) return;
     socket.emit('playerReady', { roomId });
   };
   const addChampion = () => {
-    if (!selectChampion || !currentPlayer || currentPlayer.role === 'Spectator')
-      return;
+    if (!isMyTurn) return;
 
+    const actionType = draftSequence[room.currentStep].type;
     const team = currentPlayer.role === 'Red' ? 'Red' : 'Blue';
     const newChampion: Champion = {
       id: selectChampion.id,
@@ -39,8 +66,12 @@ export const BansBar = ({
       action: 'pick',
       team,
     };
-
-    socket.emit('updateChampionSelect', { roomId, champion: newChampion });
+    socket.emit('updateChampionSelect', {
+      roomId,
+      champion: newChampion,
+      actionType,
+      team: role,
+    });
     setSelectChampion(null);
   };
 
@@ -68,11 +99,15 @@ export const BansBar = ({
           <button onClick={handleReady}>
             {currentPlayer.ready ? 'WAITING...' : 'READY'}
           </button>
-        ) : canBan ? (
-          <button onClick={addChampion}>BAN</button>
-        ) : canPick ? (
-          <button onClick={addChampion}>LOCK IN</button>
-        ) : null}
+        ) : (
+          <button
+            disabled={!isMyTurn}
+            onClick={addChampion}
+            className={`${isMyTurn ? 'cursor-pointer' : 'cursor-not-allowed'}`}
+          >
+            {draftSequence[room.currentStep]?.type?.toUpperCase() || 'END'}
+          </button>
+        )}
       </div>
       <div className='flex w-2/5 bg-team-blue'>
         {rightSlots.map((index, i) => (

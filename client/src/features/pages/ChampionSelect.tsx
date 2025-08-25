@@ -42,14 +42,9 @@ export default function ChampionSelect() {
     return () => {
       socket.off('updateRoom', handler);
     };
-    return () => {
-      socket.off('updateRoom', handler);
-    };
   }, [roomId, role]);
 
   if (!room) return <div>Loading...</div>;
-
-  const currentPlayer = room?.players[socket.id!];
 
   return (
     <div className='flex flex-wrap p-[20px] bg-linear-to-b from-gray-500 to-zinc-700 h-screen'>
@@ -85,7 +80,7 @@ export default function ChampionSelect() {
         room={room}
         socket={socket}
         roomId={roomId}
-        currentPlayer={currentPlayer}
+        role={role}
       />
     </div>
   );

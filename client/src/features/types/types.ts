@@ -17,7 +17,13 @@ export interface Player {
 }
 
 export interface RoomState {
+  currentStep: number;
   championList: Champion[];
   players: Record<string, Player>;
   status: 'waiting' | 'drafting';
 }
+
+export type DraftAction = {
+  type: 'ban' | 'pick';
+  team: 'blue' | 'red';
+};
