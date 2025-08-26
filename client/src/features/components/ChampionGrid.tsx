@@ -1,9 +1,12 @@
 import championsRaw from '../data/champions.json';
-import type { RiotChampion } from '../types/types';
+import type { RiotChampion, DraftAction } from '../types/types';
 import roles from '../data/roles.json';
 import { ChampionCard } from './ChampionCard';
 
 export const ChampionGrid = ({
+  draftSequence,
+  room,
+  role,
   selectChampion,
   setSelectChampion,
   championsList,
@@ -33,18 +36,25 @@ export const ChampionGrid = ({
       champ.name.toLowerCase().includes(searchChampion.toLowerCase())
     );
 
+  const isMyTurn =
+    role !== 'spectator' && draftSequence[room.currentStep]?.team === role;
+
   return (
     <section className='flex justify-center content-start flex-wrap w-full h-[calc(100%-48px)] overflow-auto'>
       {filteredChampions.map(([_, champ]) => {
         const isDisabled =
           (selectChampion && selectChampion.id === champ.id) ||
           championsList.some((c) => c.id === champ.id);
+
+        const finalDisabled = isDisabled || !isMyTurn;
         return (
           <ChampionCard
             key={champ.key}
             champion={champ}
             isDisabled={isDisabled}
-            onClick={() => !isDisabled && setSelectChampion(champ)}
+            onClick={() => {
+              !finalDisabled && setSelectChampion(champ);
+            }}
           />
         );
       })}

@@ -7,9 +7,32 @@ import { FilterButtons } from '../components/FilterButtons';
 import { SearchBar } from '../components/SearchBar';
 import { ChampionGrid } from '../components/ChampionGrid';
 import { useChampionSelectLogic } from '../hooks/useChampionSelectLogic';
-import { RoomState } from '../types/types';
+import { RoomState, DraftAction } from '../types/types';
 
 export default function ChampionSelect() {
+  const draftSequence: DraftAction[] = [
+    { type: 'ban', team: 'blue' },
+    { type: 'ban', team: 'red' },
+    { type: 'ban', team: 'blue' },
+    { type: 'ban', team: 'red' },
+    { type: 'ban', team: 'blue' },
+    { type: 'ban', team: 'red' },
+    { type: 'pick', team: 'blue' },
+    { type: 'pick', team: 'red' },
+    { type: 'pick', team: 'red' },
+    { type: 'pick', team: 'blue' },
+    { type: 'pick', team: 'blue' },
+    { type: 'pick', team: 'red' },
+    { type: 'ban', team: 'red' },
+    { type: 'ban', team: 'blue' },
+    { type: 'ban', team: 'red' },
+    { type: 'ban', team: 'blue' },
+    { type: 'pick', team: 'red' },
+    { type: 'pick', team: 'blue' },
+    { type: 'pick', team: 'blue' },
+    { type: 'pick', team: 'red' },
+  ];
+
   const {
     selectChampion,
     setSelectChampion,
@@ -64,6 +87,9 @@ export default function ChampionSelect() {
             />
           </div>
           <ChampionGrid
+            draftSequence={draftSequence}
+            room={room}
+            role={role}
             selectChampion={selectChampion}
             setSelectChampion={setSelectChampion}
             championsList={room.championList}
@@ -75,6 +101,7 @@ export default function ChampionSelect() {
       </main>
 
       <BansBar
+        draftSequence={draftSequence}
         selectChampion={selectChampion}
         setSelectChampion={setSelectChampion}
         room={room}

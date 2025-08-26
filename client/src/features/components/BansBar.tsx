@@ -3,6 +3,7 @@ import { Champion } from '../types/types';
 import { DraftAction } from '../types/types';
 
 export const BansBar = ({
+  draftSequence,
   selectChampion,
   setSelectChampion,
   room,
@@ -12,37 +13,8 @@ export const BansBar = ({
 }) => {
   const currentPlayer = room?.players[socket.id!];
 
-  const draftSequence: DraftAction[] = [
-    { type: 'ban', team: 'blue' },
-    { type: 'ban', team: 'red' },
-    { type: 'ban', team: 'blue' },
-    { type: 'ban', team: 'red' },
-    { type: 'ban', team: 'blue' },
-    { type: 'ban', team: 'red' },
-    { type: 'pick', team: 'blue' },
-    { type: 'pick', team: 'red' },
-    { type: 'pick', team: 'red' },
-    { type: 'pick', team: 'blue' },
-    { type: 'pick', team: 'blue' },
-    { type: 'pick', team: 'red' },
-    { type: 'ban', team: 'red' },
-    { type: 'ban', team: 'blue' },
-    { type: 'ban', team: 'red' },
-    { type: 'ban', team: 'blue' },
-    { type: 'pick', team: 'red' },
-    { type: 'pick', team: 'blue' },
-    { type: 'pick', team: 'blue' },
-    { type: 'pick', team: 'red' },
-  ];
-
   const isMyTurn =
     role !== 'spectator' && draftSequence[room.currentStep]?.team === role;
-
-  const handleAction = () => {
-    if (!isMyTurn) return;
-    const actionType = draftSequence[room.currentStep].type;
-    socket.emit('makeAction', { actionType, team: role });
-  };
 
   const canReady =
     currentPlayer.role !== 'Spectator' && room.status === 'waiting';
