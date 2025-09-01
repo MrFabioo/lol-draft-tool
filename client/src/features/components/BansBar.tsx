@@ -44,6 +44,7 @@ export const BansBar = ({
       actionType,
       team: role,
     });
+    socket.emit('confirmChampion', { roomId });
     setSelectChampion(null);
   };
 

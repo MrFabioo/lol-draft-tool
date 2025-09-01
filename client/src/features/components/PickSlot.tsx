@@ -11,7 +11,7 @@ export const PickSlot = ({
 }: PickSlotProps) => {
   return (
     <div className={`w-full h-1/5 ${marginBottom}`}>
-      {champion ? (
+      {champion && champion.key ? (
         <div
           className={`w-full h-full bg-size-[241%]`}
           style={{

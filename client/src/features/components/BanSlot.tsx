@@ -1,7 +1,7 @@
 import { Champion } from '../types/types';
 
-export const BanSlot = ({ champion }) => {
-  if (!champion) {
+export const BanSlot = ({ champion }: { champion: Champion }) => {
+  if (!champion || !champion.image) {
     return <div className='h-full w-1/5 bg-dark-gray' />;
   }
 
@@ -9,7 +9,7 @@ export const BanSlot = ({ champion }) => {
     <img
       className='w-full h-full'
       src={`https://ddragon.leagueoflegends.com/cdn/15.10.1/img/champion/${champion.image.full}`}
-      alt={champion.id}
+      alt={champion.id || 'empty'}
     />
   );
 };

@@ -30,6 +30,45 @@ const draftSequence = [
 ];
 
 let rooms = {};
+let timers = {}; // tutaj będą same referencje do setInterval
+
+function startTimer(roomId) {
+  const room = rooms[roomId];
+  if (!room) return;
+
+  // żeby nie odpalać kilku liczników na raz
+  if (timers[roomId]) return;
+
+  room.timer = 30;
+  timers[roomId] = setInterval(() => {
+    room.timer -= 1;
+    io.to(roomId).emit('updateRoom', room);
+
+    if (room.timer <= 0) {
+      clearInterval(timers[roomId]);
+      delete timers[roomId];
+
+      const step = draftSequence[room.currentStep];
+
+      if (step) {
+        if (!room.championList[room.currentStep]) {
+          room.championList[room.currentStep] = {
+            id: null,
+            name: null,
+            action: step.type,
+            team: step.team === 'red' ? 'Red' : 'Blue',
+            auto: true,
+          };
+        }
+      }
+
+      room.currentStep += 1;
+      room.timer = 30;
+      io.to(roomId).emit('updateRoom', room);
+      startTimer(roomId);
+    }
+  }, 1000);
+}
 
 io.on('connection', (socket) => {
   console.log('Nowy klient podłączony');
@@ -43,6 +82,7 @@ io.on('connection', (socket) => {
         players: {},
         status: 'waiting',
         currentStep: 0,
+        timer: 30,
       };
     }
 
@@ -64,9 +104,22 @@ io.on('connection', (socket) => {
       players.filter((p) => p.role === 'Blue')[0]?.ready
     ) {
       rooms[roomId].status = 'drafting';
+      startTimer(roomId);
     }
 
     io.to(roomId).emit('updateRoom', rooms[roomId]);
+  });
+
+  socket.on('confirmChampion', ({ roomId }) => {
+    const room = rooms[roomId];
+    if (!room) return;
+
+    room.currentStep += 1;
+    room.timer = 30;
+
+    io.to(roomId).emit('updateRoom', room);
+
+    startTimer(roomId);
   });
 
   socket.on(
@@ -77,7 +130,10 @@ io.on('connection', (socket) => {
 
       if (!rooms || room.status !== 'drafting' || !step) return;
 
-      if (step.type !== actionType || step.team !== team) {
+      if (
+        step.type !== actionType ||
+        step.team.toLowerCase() !== team.toLowerCase()
+      ) {
         socket.emit('invalidAction');
         return;
       }
@@ -89,8 +145,11 @@ io.on('connection', (socket) => {
         (player.role === 'Red' && champion.team === 'Red') ||
         (player.role === 'Blue' && champion.team === 'Blue')
       ) {
-        room.championList.push(champion);
-        room.currentStep += 1;
+        room.championList[room.currentStep] = {
+          ...champion,
+          step: room.currentStep,
+        };
+
         io.to(roomId).emit('updateRoom', room);
       }
     }
@@ -105,6 +164,10 @@ io.on('connection', (socket) => {
 
         if (Object.keys(rooms[roomId].players).length === 0) {
           delete rooms[roomId];
+          if (timers[roomId]) {
+            clearInterval(timers[roomId]);
+            delete timers[roomId];
+          }
         }
       }
     }

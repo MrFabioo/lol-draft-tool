@@ -1,4 +1,4 @@
-export const TimerBar = () => {
+export const TimerBar = ({ room }) => {
   return (
     <header className='w-full h-12 flex text-white text-sm font-bold '>
       {/* Team Blue */}
@@ -8,7 +8,7 @@ export const TimerBar = () => {
 
       {/* Draft Phase */}
       <div className='w-1/3 flex items-center justify-center bg-gray-800 text-white'>
-        Blue Ban
+        {room.timer}
       </div>
 
       {/* Team Red */}

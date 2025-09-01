@@ -71,7 +71,7 @@ export default function ChampionSelect() {
 
   return (
     <div className='flex flex-wrap p-[20px] bg-linear-to-b from-gray-500 to-zinc-700 h-screen'>
-      <TimerBar />
+      <TimerBar room={room} />
 
       <main className='flex w-full h-17/20'>
         <BluePicks championsList={room.championList} />
