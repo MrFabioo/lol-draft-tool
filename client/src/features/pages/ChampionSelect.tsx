@@ -34,8 +34,6 @@ export default function ChampionSelect() {
   ];
 
   const {
-    selectChampion,
-    setSelectChampion,
     room,
     setRoom,
     searchChampion,
@@ -52,10 +50,10 @@ export default function ChampionSelect() {
 
     const playerRole =
       role.toLocaleLowerCase() === 'red'
-        ? 'Red'
+        ? 'red'
         : role.toLocaleLowerCase() === 'blue'
-        ? 'Blue'
-        : 'Spectator';
+        ? 'blue'
+        : 'spectator';
 
     socket.emit('joinRoom', { roomId, role: playerRole });
 
@@ -89,12 +87,12 @@ export default function ChampionSelect() {
           <ChampionGrid
             draftSequence={draftSequence}
             room={room}
+            roomId={roomId}
             role={role}
-            selectChampion={selectChampion}
-            setSelectChampion={setSelectChampion}
             championsList={room.championList}
             searchChampion={searchChampion}
             activeRole={activeRole}
+            socket={socket}
           />
         </aside>
         <RedPicks championsList={room.championList} />
@@ -102,8 +100,6 @@ export default function ChampionSelect() {
 
       <BansBar
         draftSequence={draftSequence}
-        selectChampion={selectChampion}
-        setSelectChampion={setSelectChampion}
         room={room}
         socket={socket}
         roomId={roomId}

@@ -4,7 +4,6 @@ import { socket } from './socket';
 import { useParams } from 'react-router-dom';
 
 export const useChampionSelectLogic = () => {
-  const [selectChampion, setSelectChampion] = useState<Champion | null>(null);
   const [room, setRoom] = useState<RoomState | null>(null);
   const [searchChampion, setSearchChampion] = useState('');
   const [activeRole, setActiveRole] = useState<string | null>(null);
@@ -14,8 +13,6 @@ export const useChampionSelectLogic = () => {
   }>();
 
   return {
-    selectChampion,
-    setSelectChampion,
     room,
     setRoom,
     searchChampion,

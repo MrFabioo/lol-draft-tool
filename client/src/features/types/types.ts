@@ -1,8 +1,8 @@
 export type RiotChampion = {
   id: string | null;
-  key?: string;
+  key: string;
   name: string | null;
-  image?: {
+  image: {
     full: string;
   };
 };

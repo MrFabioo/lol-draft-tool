@@ -19,7 +19,7 @@ export const ChampionCard = ({
   >
     <img
       src={`https://ddragon.leagueoflegends.com/cdn/15.10.1/img/champion/${champion.image.full}`}
-      alt={`${champion.name}`}
+      alt={champion.name ?? ''}
     />
   </div>
 );

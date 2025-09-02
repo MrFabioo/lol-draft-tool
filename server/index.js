@@ -56,7 +56,7 @@ function startTimer(roomId) {
             id: null,
             name: null,
             action: step.type,
-            team: step.team === 'red' ? 'Red' : 'Blue',
+            team: step.team === 'red' ? 'red' : 'blue',
             auto: true,
           };
         }
@@ -100,26 +100,14 @@ io.on('connection', (socket) => {
 
     const players = Object.values(rooms[roomId].players);
     if (
-      players.filter((p) => p.role === 'Red')[0]?.ready &&
-      players.filter((p) => p.role === 'Blue')[0]?.ready
+      players.filter((p) => p.role === 'red')[0]?.ready &&
+      players.filter((p) => p.role === 'blue')[0]?.ready
     ) {
       rooms[roomId].status = 'drafting';
       startTimer(roomId);
     }
 
     io.to(roomId).emit('updateRoom', rooms[roomId]);
-  });
-
-  socket.on('confirmChampion', ({ roomId }) => {
-    const room = rooms[roomId];
-    if (!room) return;
-
-    room.currentStep += 1;
-    room.timer = 30;
-
-    io.to(roomId).emit('updateRoom', room);
-
-    startTimer(roomId);
   });
 
   socket.on(
@@ -142,8 +130,8 @@ io.on('connection', (socket) => {
       if (!player) return;
 
       if (
-        (player.role === 'Red' && champion.team === 'Red') ||
-        (player.role === 'Blue' && champion.team === 'Blue')
+        (player.role === 'red' && champion.team === 'red') ||
+        (player.role === 'blue' && champion.team === 'blue')
       ) {
         room.championList[room.currentStep] = {
           ...champion,
@@ -154,6 +142,26 @@ io.on('connection', (socket) => {
       }
     }
   );
+
+  socket.on('confirmChampion', ({ roomId }) => {
+    const room = rooms[roomId];
+    if (!room) return;
+
+    room.currentStep += 1;
+
+    if (room.currentStep === draftSequence.length) {
+      room.status = 'finished';
+      room.timer = 0;
+      io.to(roomId).emit('updateRoom', room);
+      clearInterval(timers[roomId]);
+      delete timers[roomId];
+      return;
+    }
+
+    room.timer = 30;
+    io.to(roomId).emit('updateRoom', room);
+    startTimer(roomId);
+  });
 
   socket.on('disconnect', () => {
     console.log('Klient rozłączony');

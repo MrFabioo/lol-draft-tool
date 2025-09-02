@@ -2,15 +2,7 @@ import { BanSlot } from './BanSlot';
 import { Champion } from '../types/types';
 import { DraftAction } from '../types/types';
 
-export const BansBar = ({
-  draftSequence,
-  selectChampion,
-  setSelectChampion,
-  room,
-  socket,
-  roomId,
-  role,
-}) => {
+export const BansBar = ({ draftSequence, room, socket, roomId, role }) => {
   const currentPlayer = room?.players[socket.id!];
 
   const isMyTurn =
@@ -26,26 +18,10 @@ export const BansBar = ({
   const addChampion = () => {
     if (!isMyTurn) return;
 
-    const actionType = draftSequence[room.currentStep].type;
-    const team = currentPlayer.role === 'Red' ? 'Red' : 'Blue';
-    const newChampion: Champion = {
-      id: selectChampion.id,
-      key: selectChampion.key,
-      name: selectChampion.name,
-      image: {
-        full: selectChampion.image.full,
-      },
-      action: 'pick',
-      team,
-    };
-    socket.emit('updateChampionSelect', {
-      roomId,
-      champion: newChampion,
-      actionType,
-      team: role,
-    });
+    const currentChamp = room.championList[room.currentStep];
+    if (!currentChamp) return;
+
     socket.emit('confirmChampion', { roomId });
-    setSelectChampion(null);
   };
 
   const leftSlots = [0, 2, 4, 13, 15];
