@@ -1,38 +1,16 @@
 import { useEffect } from 'react';
-import { TimerBar } from '../components/TimerBar';
-import { BansBar } from '../components/BansBar';
-import { BluePicks } from '../components/BluePicks';
-import { RedPicks } from '../components/RedPicks';
-import { FilterButtons } from '../components/FilterButtons';
-import { SearchBar } from '../components/SearchBar';
-import { ChampionGrid } from '../components/ChampionGrid';
-import { useChampionSelectLogic } from '../hooks/useChampionSelectLogic';
-import { RoomState, DraftAction } from '../types/types';
+import { TimerBar } from '../features/draft/components/TimerBar';
+import { BansBar } from '../features/draft/components/BansBar';
+import { BluePicks } from '../features/draft/components/BluePicks';
+import { RedPicks } from '../features/draft/components/RedPicks';
+import { FilterButtons } from '../features/draft/components/ui/FilterButtons';
+import { SearchBar } from '../features/draft/components/ui/SearchBar';
+import { ChampionGrid } from '../features/draft/components/ChampionGrid';
+import { useChampionSelectLogic } from '../features/draft/hooks/useChampionSelectLogic';
+import { RoomState } from '../features/draft/types/types';
+import { draftSequence } from '../features/draft/data/draftSequence';
 
 export default function ChampionSelect() {
-  const draftSequence: DraftAction[] = [
-    { type: 'ban', team: 'blue' },
-    { type: 'ban', team: 'red' },
-    { type: 'ban', team: 'blue' },
-    { type: 'ban', team: 'red' },
-    { type: 'ban', team: 'blue' },
-    { type: 'ban', team: 'red' },
-    { type: 'pick', team: 'blue' },
-    { type: 'pick', team: 'red' },
-    { type: 'pick', team: 'red' },
-    { type: 'pick', team: 'blue' },
-    { type: 'pick', team: 'blue' },
-    { type: 'pick', team: 'red' },
-    { type: 'ban', team: 'red' },
-    { type: 'ban', team: 'blue' },
-    { type: 'ban', team: 'red' },
-    { type: 'ban', team: 'blue' },
-    { type: 'pick', team: 'red' },
-    { type: 'pick', team: 'blue' },
-    { type: 'pick', team: 'blue' },
-    { type: 'pick', team: 'red' },
-  ];
-
   const {
     room,
     setRoom,

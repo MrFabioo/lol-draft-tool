@@ -1,4 +1,4 @@
-import { Champion } from '../types/types';
+import { Champion } from '../../types/types';
 
 export const BanSlot = ({ champion }: { champion: Champion }) => {
   if (!champion || !champion.image) {

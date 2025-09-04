@@ -1,4 +1,4 @@
-import type { RiotChampion } from '../types/types';
+import type { RiotChampion } from '../../types/types';
 
 type ChampionCardProps = {
   champion: RiotChampion;

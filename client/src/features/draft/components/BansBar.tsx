@@ -1,6 +1,4 @@
-import { BanSlot } from './BanSlot';
-import { Champion } from '../types/types';
-import { DraftAction } from '../types/types';
+import { BanSlot } from './ui/BanSlot';
 
 export const BansBar = ({ draftSequence, room, socket, roomId, role }) => {
   const currentPlayer = room?.players[socket.id!];

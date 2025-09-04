@@ -1,7 +1,7 @@
 import championsRaw from '../data/champions.json';
-import type { RiotChampion, DraftAction } from '../types/types';
+import type { RiotChampion } from '../types/types';
 import roles from '../data/roles.json';
-import { ChampionCard } from './ChampionCard';
+import { ChampionCard } from './ui/ChampionCard';
 
 export const ChampionGrid = ({
   draftSequence,
