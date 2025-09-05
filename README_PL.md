@@ -6,9 +6,10 @@ Aplikacja stworzona z myślą o graczach **competitive**, którzy szukają narz�
 
 Aktualnie aplikacja oferuje podstawową wersję draftowania:
 
-- Jeden użytkownik może wykonać pełny draft – zarówno dla swojej drużyny, jak i przeciwnika.
-- Obsługa fazy **banowania** i **pickowania**.
-- Możliwość filtrowania bohaterów:
+- zakładasz pokój i dostajesz 3 linki (dla drużyny niebieskiej, czerwonej i obserwatora)
+- każdy gracz ma swoją kolej wyboru, a obserwator tylko ogląda
+- dostępna jest pełna faza **banów** i **picków** z licznikami czasu
+- szybkie filtrowanie championów:
   - po **nazwie**
   - po **linii** (roli)
 
@@ -20,7 +21,8 @@ Projekt został stworzony z użyciem nowoczesnego stosu technologicznego:
 - TypeScript (TSX)
 - Tailwind CSS
 - Vite
-- ESLint
+- ESLint + Prettier
+- Socket.io
 
 ## Instrukcja
 
@@ -45,9 +47,7 @@ Aby uruchomić aplikację lokalnie:
 
 Projekt jest w fazie wczesnego rozwoju. W przyszłości planowane są następujące funkcje:
 
-- Możliwość dodawania notatek do bohaterów
+- Możliwość dodawania notatek
 - System logowania i zakładania konta (z zapisem własnych ustawień)
-- Symulacja draftu poprzez generowanie osobnych linków dla każdej drużyny (jak w draftlol.dawe.gg)
-- Licznik czasu zgodny ze standardami rozgrywek turniejowych
 - Obsługa trybów: BO1, BO3, BO5, z blokadą wybranych bohaterów na całą serię (Fearless Draft)
 - Nowy interfejs graficzny
