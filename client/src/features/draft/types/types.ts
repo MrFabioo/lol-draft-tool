@@ -1,3 +1,12 @@
+export type RoleKey = 'support' | 'bottom' | 'top' | 'middle' | 'jungle';
+export const ROLES: RoleKey[] = [
+  'top',
+  'jungle',
+  'middle',
+  'bottom',
+  'support',
+] as const;
+
 export type RiotChampion = {
   id: string | null;
   key: string;
@@ -6,14 +15,15 @@ export type RiotChampion = {
     full: string;
   };
 };
+
 export type Champion = RiotChampion & {
   action: 'pick' | 'ban';
-  team: 'Red' | 'Blue';
+  team: 'red' | 'blue';
   auto?: boolean;
 };
 
 export interface Player {
-  role: 'Red' | 'Blue' | 'Spectator';
+  role: 'red' | 'blue' | 'spectator';
   ready: boolean;
 }
 
@@ -27,5 +37,5 @@ export interface RoomState {
 
 export type DraftAction = {
   type: 'ban' | 'pick';
-  team: 'blue' | 'red';
+  team: 'red' | 'blue';
 };

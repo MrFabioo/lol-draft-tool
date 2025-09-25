@@ -7,8 +7,8 @@ import { FilterButtons } from '../features/draft/components/ui/FilterButtons';
 import { SearchBar } from '../features/draft/components/ui/SearchBar';
 import { ChampionGrid } from '../features/draft/components/ChampionGrid';
 import { useChampionSelectLogic } from '../features/draft/hooks/useChampionSelectLogic';
-import { RoomState } from '../features/draft/types/types';
-import { draftSequence } from '../features/draft/data/draftSequence';
+import { RoomState, RoleKey } from '../features/draft/types/types';
+import Sequence from '../features/draft/components/ui/DraftSequence';
 
 export default function ChampionSelect() {
   const {
@@ -26,10 +26,10 @@ export default function ChampionSelect() {
   useEffect(() => {
     if (!roomId || !role) return;
 
-    const playerRole =
-      role.toLocaleLowerCase() === 'red'
+    const playerRole: 'red' | 'blue' | 'spectator' =
+      role.toLowerCase() === 'red'
         ? 'red'
-        : role.toLocaleLowerCase() === 'blue'
+        : role.toLowerCase() === 'blue'
         ? 'blue'
         : 'spectator';
 
@@ -41,48 +41,48 @@ export default function ChampionSelect() {
     return () => {
       socket.off('updateRoom', handler);
     };
-  }, [roomId, role]);
+  }, [roomId, role, socket, setRoom]);
 
   if (!room) return <div>Loading...</div>;
 
   return (
-    <div className='flex flex-wrap p-[20px] bg-linear-to-b from-gray-500 to-zinc-700 h-screen'>
+    <div className='flex flex-wrap bg-background h-screen'>
       <TimerBar room={room} />
 
-      <main className='flex w-full h-17/20'>
-        <BluePicks championsList={room.championList} />
-        <aside className='px-[10px] w-4/6'>
-          <div className='h-12 flex justify-between'>
+      <main className='flex w-full h-[calc(70%-52px)] mt-13'>
+        <BluePicks
+          championsList={room.championList}
+          currentStep={room.currentStep}
+        />
+        <aside className='mx-16 w-4/6 bg-dark-gray border-3 border-gold'>
+          <div className='h-12 flex justify-between border-b-3 border-gold'>
             <FilterButtons
               activeRole={activeRole}
               setActiveRole={setActiveRole}
             />
+            <Sequence currentStep={room.currentStep} />
             <SearchBar
               searchChampion={searchChampion}
               setSearchChampion={setSearchChampion}
             />
           </div>
           <ChampionGrid
-            draftSequence={draftSequence}
             room={room}
-            roomId={roomId}
-            role={role}
+            roomId={roomId!}
+            role={role!}
             championsList={room.championList}
             searchChampion={searchChampion}
-            activeRole={activeRole}
+            activeRole={activeRole as RoleKey | null}
             socket={socket}
           />
         </aside>
-        <RedPicks championsList={room.championList} />
+        <RedPicks
+          championsList={room.championList}
+          currentStep={room.currentStep}
+        />
       </main>
 
-      <BansBar
-        draftSequence={draftSequence}
-        room={room}
-        socket={socket}
-        roomId={roomId}
-        role={role}
-      />
+      <BansBar room={room} socket={socket} roomId={roomId!} role={role!} />
     </div>
   );
 }

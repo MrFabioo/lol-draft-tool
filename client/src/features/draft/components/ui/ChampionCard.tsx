@@ -1,4 +1,5 @@
 import type { RiotChampion } from '../../types/types';
+import clsx from 'clsx';
 
 type ChampionCardProps = {
   champion: RiotChampion;
@@ -12,14 +13,18 @@ export const ChampionCard = ({
   onClick,
 }: ChampionCardProps) => (
   <div
-    className={`m-1 cursor-pointer ${
-      isDisabled ? 'opacity-50 pointer-events-none' : ''
-    }`}
+    className={clsx(
+      'relative m-1 cursor-pointer',
+      isDisabled && 'pointer-events-none'
+    )}
     onClick={onClick}
+    aria-disabled={isDisabled}
   >
     <img
       src={`https://ddragon.leagueoflegends.com/cdn/15.10.1/img/champion/${champion.image.full}`}
       alt={champion.name ?? ''}
+      className={clsx(isDisabled && 'grayscale')}
+      loading='lazy'
     />
   </div>
 );

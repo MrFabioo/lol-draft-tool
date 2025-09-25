@@ -30,13 +30,12 @@ const draftSequence = [
 ];
 
 let rooms = {};
-let timers = {}; // tutaj będą same referencje do setInterval
+let timers = {};
 
 function startTimer(roomId) {
   const room = rooms[roomId];
   if (!room) return;
 
-  // żeby nie odpalać kilku liczników na raz
   if (timers[roomId]) return;
 
   room.timer = 30;
@@ -63,6 +62,17 @@ function startTimer(roomId) {
       }
 
       room.currentStep += 1;
+
+      if (room.currentStep >= draftSequence.length) {
+        room.status = 'finished';
+        room.timer = '';
+        io.to(roomId).emit('updateRoom', room);
+
+        clearInterval(timers[roomId]);
+        delete timers[roomId];
+        return;
+      }
+
       room.timer = 30;
       io.to(roomId).emit('updateRoom', room);
       startTimer(roomId);
@@ -151,7 +161,7 @@ io.on('connection', (socket) => {
 
     if (room.currentStep === draftSequence.length) {
       room.status = 'finished';
-      room.timer = 0;
+      room.timer = '';
       io.to(roomId).emit('updateRoom', room);
       clearInterval(timers[roomId]);
       delete timers[roomId];

@@ -1,8 +1,15 @@
 import { RoleButton } from './RoleButton';
+import { RoleKey, ROLES } from '../../types/types';
 
-const ROLES = ['top', 'jungle', 'mid', 'bot', 'support'];
+interface FilterButtonsProps {
+  activeRole: RoleKey | null;
+  setActiveRole: (role: RoleKey | null) => void;
+}
 
-export const FilterButtons = ({ activeRole, setActiveRole }) => {
+export const FilterButtons = ({
+  activeRole,
+  setActiveRole,
+}: FilterButtonsProps) => {
   return (
     <div className='w-1/3 flex justify-around'>
       {ROLES.map((role) => (

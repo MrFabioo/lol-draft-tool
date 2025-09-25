@@ -1,20 +1,24 @@
+import clsx from 'clsx';
+import { RoleKey } from '../../types/types';
+
 type RoleButtonProps = {
-  role: string;
+  role: RoleKey;
   isActive: boolean;
   onClick: () => void;
 };
 
-export const RoleButton = ({ role, isActive, onClick }: RoleButtonProps) => {
-  const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
+const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
 
+export const RoleButton = ({ role, isActive, onClick }: RoleButtonProps) => {
   return (
     <button className={`cursor-pointer h-full`} onClick={onClick}>
       <img
-        src={`/src/assets/images/Position_Gold-${capitalize(role)}.png`}
-        alt={`Position Gold ${capitalize(role)}`}
-        className={`h-full ${
-          isActive ? 'drop-shadow-[0_0_10px_rgba(0,0,0,1)]' : ''
-        }`}
+        src={`/src/assets/images/${capitalize(role)}_icon.png`}
+        alt={`Position ${capitalize(role)}`}
+        className={clsx(
+          'h-full',
+          isActive ? 'brightness-120' : 'brightness-90'
+        )}
       />
     </button>
   );
