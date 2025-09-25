@@ -6,9 +6,10 @@ A web application designed for **competitive** League of Legends players looking
 
 Currently, the application offers a basic draft experience:
 
-- A single user can conduct the full draft — for both their own team and the opponent.
-- Supports **banning** and **picking** phases.
-- Champion filtering options:
+- create a room and get 3 links (blue team, red team, spectator)
+- each player has their own turn in the draft, while the spectator can only watch
+- full ban and pick phases with a countdown timer
+- quick champion filtering:
   - by **name**
   - by **role** (lane)
 
@@ -20,7 +21,8 @@ The project is built using a modern front-end stack:
 - TypeScript (TSX)
 - Tailwind CSS
 - Vite
-- ESLint
+- ESLint + Prettier
+- Socket.io
 
 ## Getting Started
 
@@ -54,12 +56,10 @@ To run the application locally:
 
 This project is still in early development. Planned features include:
 
-- Adding personal notes to champions
-- User authentication with account creation and persistent settings
-- True draft simulation by generating separate links for each team (similar to draftlol.dawe.gg)
-- Draft timer based on official competitive standards
-- Support for BO1, BO3, BO5 modes with persistent champion bans across the series (Fearless Draft)
-- A redesigned user interface
+- the ability to add notes
+- account system with login and saved settings
+- support for BO1, BO3, and BO5 formats with Fearless Draft (persistent bans across the series)
+- redesigned user interface
 
 ## Contributing
 
