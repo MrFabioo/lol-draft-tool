@@ -81,11 +81,7 @@ function startTimer(roomId) {
 }
 
 io.on('connection', (socket) => {
-  console.log('Nowy klient podłączony');
-
   socket.on('joinRoom', ({ roomId, role }) => {
-    socket.join(roomId);
-
     if (!rooms[roomId]) {
       rooms[roomId] = {
         championList: [],
@@ -96,7 +92,28 @@ io.on('connection', (socket) => {
       };
     }
 
-    rooms[roomId].players[socket.id] = { role, ready: false };
+    if (rooms[roomId].players[socket.id]) {
+      console.log(
+        'Socket',
+        socket.id,
+        'już jest w tym pokoju — pomijam joinRoom'
+      );
+      return;
+    }
+
+    let finalRole = role;
+
+    if (
+      (role === 'blue' || role === 'red') &&
+      Object.values(rooms[roomId].players).some((p) => p.role === role)
+    ) {
+      finalRole = 'spectator';
+    }
+
+    rooms[roomId].players[socket.id] = { role: finalRole, ready: false };
+    socket.join(roomId);
+
+    console.log('Gracze w pokoju:', rooms[roomId].players);
 
     socket.emit('updateRoom', rooms[roomId]);
     io.to(roomId).emit('updateRoom', rooms[roomId]);

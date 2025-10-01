@@ -1,4 +1,4 @@
-import championsRaw from '../data/champions.json';
+import { useEffect, useState } from 'react';
 import type {
   Champion,
   RiotChampion,
@@ -28,17 +28,50 @@ export const ChampionGrid = ({
   activeRole,
   socket,
 }: ChampionGridProps) => {
-  const champions: RiotChampion[] = Object.values(championsRaw.data).map(
-    (champ) => ({
-      id: champ.id,
-      key: champ.key,
-      name: champ.name,
-      image: { full: champ.image.full },
-    })
-  );
+  const [champions, setChampions] = useState<RiotChampion[]>([]);
+  const [version, setVersion] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchChampions = async () => {
+      try {
+        const versionRes = await fetch(
+          'https://ddragon.leagueoflegends.com/api/versions.json'
+        );
+        const version = await versionRes.json();
+        const latest = version[0];
+        setVersion(latest);
+
+        const championRes = await fetch(
+          'https://ddragon.leagueoflegends.com/cdn/15.19.1/data/en_US/champion.json'
+        );
+        const data = await championRes.json();
+        const champs: RiotChampion[] = Object.values(data.data).map(
+          (champ: any) => ({
+            id: champ.id,
+            key: champ.key,
+            name: champ.name,
+            image: { full: champ.image.full },
+          })
+        );
+
+        champs.sort((a, b) =>
+          (a.name ?? '').localeCompare(b.name ?? '', 'en', {
+            sensitivity: 'base',
+          })
+        );
+
+        setChampions(champs);
+      } catch (err) {
+        console.error('Błąd przy pobieraniu danych', err);
+      }
+    };
+
+    fetchChampions();
+  }, []);
 
   const filteredChampions = champions.filter((champ) => {
-    const roleMatch = !activeRole || roles[activeRole].includes(champ.key);
+    const roleMatch =
+      !activeRole || roles[activeRole].includes(champ.name ?? '');
     const searchMatch = champ.name
       ?.toLowerCase()
       .includes(searchChampion.toLowerCase());

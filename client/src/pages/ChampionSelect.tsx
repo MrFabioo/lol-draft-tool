@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { TimerBar } from '../features/draft/components/TimerBar';
 import { BansBar } from '../features/draft/components/BansBar';
 import { BluePicks } from '../features/draft/components/BluePicks';
@@ -23,6 +24,8 @@ export default function ChampionSelect() {
     role,
   } = useChampionSelectLogic();
 
+  const navigate = useNavigate();
+
   useEffect(() => {
     if (!roomId || !role) return;
 
@@ -35,13 +38,23 @@ export default function ChampionSelect() {
 
     socket.emit('joinRoom', { roomId, role: playerRole });
 
-    const handler = (newRoom: RoomState) => setRoom(newRoom);
+    const handler = (newRoom: RoomState) => {
+      setRoom(newRoom);
+      const myId = socket.id;
+      if (!myId) return;
+
+      const me = newRoom.players[myId];
+      if (me?.role === 'spectator' && playerRole !== 'spectator') {
+        navigate(`/${roomId}/spectator`, { replace: true });
+      }
+    };
+
     socket.on('updateRoom', handler);
 
     return () => {
       socket.off('updateRoom', handler);
     };
-  }, [roomId, role, socket, setRoom]);
+  }, [roomId, role, navigate]);
 
   if (!room) return <div>Loading...</div>;
 

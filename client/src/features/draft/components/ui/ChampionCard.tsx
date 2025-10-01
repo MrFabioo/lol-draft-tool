@@ -21,10 +21,11 @@ export const ChampionCard = ({
     aria-disabled={isDisabled}
   >
     <img
-      src={`https://ddragon.leagueoflegends.com/cdn/15.10.1/img/champion/${champion.image.full}`}
+      src={`https://ddragon.leagueoflegends.com/cdn/15.19.1/img/champion/${champion.image.full}`}
       alt={champion.name ?? ''}
       className={clsx(isDisabled && 'grayscale')}
       loading='lazy'
+      draggable={false}
     />
   </div>
 );

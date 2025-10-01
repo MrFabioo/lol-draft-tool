@@ -33,21 +33,31 @@ Aby uruchomić aplikację lokalnie:
    git clone https://github.com/MrFabioo/lol-draft-tool.git
    cd lol-draft-tool
    ```
-2. Zainstaluj wszystkie niezbędne paczki:
+2. Zainstaluj wszystkie niezbędne paczki(dla serwera i klienta):
    ```bash
+   cd server
+   npm install
+   cd ../client
    npm install
    ```
-3. Uruchom aplikację:
+3. Uruchom serwer:
    ```bash
+   cd server
+   node index.js
+   ```
+4. Uruchom klienta (w drugiej konsoli):
+   ```bash
+   cd client
    npm run dev
    ```
-4. Otwórz stronę pod adresem wyświetlonym w konsoli, np.: http://localhost:5173
+5. Otwórz stronę pod adresem wyświetlonym w konsoli, np.: http://localhost:5173
 
 ## Plany rozwojowe
 
 Projekt jest w fazie wczesnego rozwoju. W przyszłości planowane są następujące funkcje:
 
-- Możliwość dodawania notatek
-- System logowania i zakładania konta (z zapisem własnych ustawień)
 - Obsługa trybów: BO1, BO3, BO5, z blokadą wybranych bohaterów na całą serię (Fearless Draft)
-- Nowy interfejs graficzny
+
+## Jak możesz pomóc
+
+Masz pomysł na nową funkcję? Znalazłeś błąd? Możesz śmiało zgłosić problem lub wysłać pull request!Masz pomysł na nową funkcję? Znalazłeś błąd? Możesz śmiało zgłosić problem lub wysłać pull request!

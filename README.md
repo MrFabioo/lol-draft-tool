@@ -38,16 +38,27 @@ To run the application locally:
 2. Install all required dependencies:
 
    ```bash
+   cd server
+   npm install
+   cd ../client
    npm install
    ```
 
-3. Start the development server:
+3. Start the server:
 
    ```bash
+   cd server
+   node index.js
+   ```
+
+4. Start the client (in another terminal):
+
+   ```bash
+   cd client
    npm run dev
    ```
 
-4. Open the app in your browser at the address shown in the terminal, e.g.:
+5. Open the app in your browser at the address shown in the terminal, e.g.:
    ```
    http://localhost:5173
    ```
@@ -56,10 +67,7 @@ To run the application locally:
 
 This project is still in early development. Planned features include:
 
-- the ability to add notes
-- account system with login and saved settings
 - support for BO1, BO3, and BO5 formats with Fearless Draft (persistent bans across the series)
-- redesigned user interface
 
 ## Contributing
 
